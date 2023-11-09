@@ -1,1 +1,90 @@
-testtt
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def e4():
+    def a(t):
+        return np.sin(2*np.pi*3*t)
+    
+    def b(t):
+        return np.pi*t - np.floor(np.pi*t)
+    
+    v = np.linspace(0, 3, 132300)
+    
+    fig, axs = plt.subplots(3)
+    
+    axs[0].plot(v, a(v))
+    axs[1].plot(v, b(v))
+    axs[2].plot(v, a(v) + b(v))
+    plt.show()
+    
+    
+def e5():
+    def a(t):
+        return np.sin(100*np.pi*2*t)
+        
+    def b(t):
+            return np.sin(800*np.pi*2*t)
+        
+    v = np.linspace(0, 3, 100)
+    x = v
+    x[1:50] = a(v[1:50])
+    x[51:100] = b(v[51:100])
+    v = np.linspace(0, 3, 100)
+    plt.plot(v, x)
+    plt.show()
+    
+def e6():
+    def a(t):
+        return np.sin(2*np.pi*8*t)
+    
+    def b(t):
+        return np.sin(2*np.pi*4*t)
+    
+    def c(t):
+        return 0 * t
+    
+    v = np.linspace(0, 3, 49)
+    
+    fig, axs = plt.subplots(3)
+    axs[0].plot(v, a(v))
+    axs[1].plot(v, b(v))
+    axs[2].plot(v, c(v))
+    plt.show()
+    
+def e7():
+    def a(t):
+        return np.sin(2*np.pi*5*t)
+        
+    v = np.linspace(0, 1, 1001)
+    
+    fig, axs = plt.subplots(3)
+    
+    axs[0].plot(v, a(v))
+    axs[1].plot(v[::4], a(v[::4]))
+    axs[2].plot(v[::16], a(v[::16]))
+
+    plt.show()
+    
+    
+def e8():
+    v = np.linspace(-np.pi*2, np.pi*2, 1000)
+    plt.plot(v, np.sin(v))
+    plt.plot(v, v)
+    plt.show()
+    
+    plt.plot(v, v - np.sin(v))
+    plt.plot(v, 0 * v)
+    plt.show()
+    
+    plt.plot(v, np.sin(v))
+    plt.plot(v, (v - 7*v**3/60)/(1 + v**2/20))
+    plt.show()
+    
+#e4()
+#e5()
+#e6()
+#e7()
+#e8()
+
+
