@@ -1,0 +1,73 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def e1():
+
+    v = np.linspace(0, 0.03, int(0.03/0.0005) + 1)
+
+    def x(t):
+        return np.cos(520*t*np.pi + np.pi/3)
+
+    def y(t):
+        return np.cos(280*t*np.pi - np.pi/3)
+
+    def z(t):
+        return np.cos(120*t*np.pi + np.pi/3)
+
+    fig, axs = plt.subplots(3)
+
+    axs[0].plot(v, x(v))
+    axs[0].stem(v, x(v))
+    axs[1].plot(v, y(v))
+    axs[1].stem(v, y(v))
+    axs[2].plot(v, z(v))
+    axs[2].stem(v, z(v))        
+    
+    plt.tight_layout()
+    plt.show()
+    
+    
+def e2a():
+    v = np.linspace(0, 1, 1600)
+    plt.plot(v[1:30], np.sin(2*np.pi*400*v[1:30]))
+    plt.show()
+    
+def e2b():
+    v = np.linspace(0, 3, 17200)
+    plt.plot(v[:16], np.sin(1600*np.pi*v[:16]))
+    plt.show()
+    
+def e2c():
+    v = np.linspace(0, 1, 2400)
+    plt.plot(v[1:41], v[1:41]*240 - np.floor(v[1:41]*240) - 0.5)
+    plt.show()
+    
+def e2d():
+    v = np.linspace(0, 1, 6000)
+    plt.plot(v[1:101], np.sign(np.sin(600*v[1:101]*np.pi)))
+    plt.show()
+
+def e2e():
+    a = np.random.rand(128, 128)
+    plt.imshow(a)
+    plt.show()
+    
+def e2f():
+    a = np.zeros((128, 128))
+    for i in range(1, 128):
+        for j in range(1, 128):
+            a[i][j] = min(np.floor(np.sqrt((32 - i)**2 + (32 - j)**2)), 1.5 * np.floor(np.sqrt((70 - i)**2 + (90 - j)**2)))
+    plt.imshow(a)
+    plt.show()
+    
+
+# a) 1/2000 secunde intre masuratori   b) 4 * 2000 * 3600 = 28.800.000 biti sau 3.600.000 bytes
+
+#e1()
+#e2a()
+#e2b()
+#e2c()
+#e2d()
+#e2e()
+#e2f()
