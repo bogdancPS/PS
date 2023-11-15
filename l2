@@ -1,0 +1,133 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import sounddevice as sd
+
+
+def e1():
+    v = np.linspace(0, 1, 1000)
+    fig, axs = plt.subplots(2)
+    axs[0].plot(v, np.sin(3 * np.pi * 2 * v + np.pi / 3))
+    axs[1].plot(v, np.cos(np.pi * 2 * 3 * v + np.pi / 3 - np.pi / 2))
+    plt.show()
+
+
+def e2(SNR):
+    def s(t, f):
+        return np.sin(2 * np.pi * 3 * t + f)
+
+    v = np.linspace(0, 1, 1000)
+    plt.plot(v, s(v, 0))
+    plt.plot(v, s(v, np.pi / 5))
+    plt.plot(v, s(v, np.pi / 10))
+    plt.plot(v, s(v, np.pi / 20))
+    plt.plot(v, s(v, 2 * np.pi / 5))
+    plt.show()
+
+    signal = s(v, 0)
+    noise = np.random.normal(0, 1, 1000)
+    # print(np.linalg.norm(signal), np.linalg.norm(noise))
+    # plt.hist(noise)
+    g = np.sqrt(np.linalg.norm(signal) ** 2 / (np.linalg.norm(noise) ** 2 * SNR))
+    plt.plot(v, signal + g * noise)
+
+def e4():
+    def a(t):
+        return np.sin(2 * np.pi * 3 * t)
+
+    def b(t):
+        return np.pi * t - np.floor(np.pi * t)
+
+    v = np.linspace(0, 3, 132300)
+
+    fig, axs = plt.subplots(3)
+
+    axs[0].plot(v, a(v))
+    axs[1].plot(v, b(v))
+    axs[2].plot(v, a(v) + b(v))
+    plt.show()
+
+
+def e5():
+    def a(t):
+        return np.sin(100 * np.pi * 2 * t)
+
+    def b(t):
+        return np.sin(800 * np.pi * 2 * t)
+
+    v = np.linspace(0, 3, 100)
+    x = v
+    x[1:50] = a(v[1:50])
+    x[51:100] = b(v[51:100])
+    v = np.linspace(0, 3, 100)
+    plt.plot(v, x)
+    plt.show()
+
+
+def e6():
+    def a(t):
+        return np.sin(2 * np.pi * 8 * t)
+
+    def b(t):
+        return np.sin(2 * np.pi * 4 * t)
+
+    def c(t):
+        return 0 * t
+
+    v = np.linspace(0, 3, 49)
+
+    fig, axs = plt.subplots(3)
+    axs[0].plot(v, a(v))
+    axs[1].plot(v, b(v))
+    axs[2].plot(v, c(v))
+    plt.show()
+
+
+def e7():
+    def a(t):
+        return np.sin(2 * np.pi * 5 * t)
+
+    v = np.linspace(0, 1, 1001)
+
+    fig, axs = plt.subplots(3)
+
+    axs[0].plot(v, a(v))
+    axs[1].plot(v[::4], a(v[::4]))
+    axs[2].plot(v[::16], a(v[::16]))
+
+    plt.show()
+
+
+def e8():
+    v = np.linspace(-np.pi * 2, np.pi * 2, )
+    plt.plot(v, np.sin(v))
+    plt.plot(v, v)
+    plt.show()
+
+    plt.plot(v, v - np.sin(v))
+    plt.plot(v, 0 * v)
+    plt.show()
+
+    plt.plot(v, np.sin(v))
+    plt.plot(v, (v - 7 * v ** 3 / 60) / (1 + v ** 2 / 20))
+    plt.show()
+
+def e3():
+    v = np.linspace(0, 1, 44100)
+    sd.play(np.sin(2*np.pi*v*400), 44100)
+    sd.wait()
+
+    sd.play(np.sin(2*np.pi*800*v), 44100)
+    sd.wait()
+
+    sd.play(np.sign(np.sin(600*v*np.pi)), 44100)
+    sd.wait()
+
+    sd.play(v*240 - np.floor(v*240) - 0.5, 44100)
+    sd.wait()
+
+#e4()
+#e3()
+# e5()
+# e6()
+# e7()
+# e8()
