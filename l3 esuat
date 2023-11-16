@@ -6,7 +6,7 @@ import math
 
 
 def f(t):
-    return np.sin(2*np.pi*t*3) + 1/2*np.cos(2*np.pi*t*7) + 2*np.cos(2*np.pi*t*13)
+    return 5*np.sin(2*np.pi*t*3) + 1/2*np.cos(2*np.pi*t*7) + 2*np.cos(2*np.pi*t*13)
 
 
 def e1():
@@ -19,8 +19,12 @@ def e1():
 
     fig, axs = plt.subplots(4, 2)
     for i in range(0, 4):
-        axs[i][0].scatter(F[i].real, F[i].imag)
-        axs[i][1].scatter(F[i + 4].real, F[i + 4].imag)
+        #axs[i][0].scatter(F[i].real, F[i].imag)
+        #axs[i][1].scatter(F[i + 4].real, F[i + 4].imag)
+        axs[i][0].plot(v, F[i].real)
+        axs[i][0].plot(v, F[i].imag)
+        axs[i][1].plot(v, F[i + 4].real)
+        axs[i][1].plot(v, F[i + 4].imag)
 
     fig.set_figheight(30)
     plt.show()
@@ -29,7 +33,7 @@ def e1():
     X = []
     for i in x:
         X.append(np.abs(i))
-    plt.scatter(range(0, 8), X)
+    plt.stem(range(0, 8), X)
     plt.show()
 
     print(np.allclose(1/np.sqrt(8) * np.dot(F, F.conj().T), np.eye(8)))
@@ -37,7 +41,7 @@ def e1():
 
 def e2():
 
-    v = np.linspace(0, 2, 150)
+    v = np.linspace(0, 2, 450)
 
     plt.plot(v, f(v))
     plt.show()
@@ -60,8 +64,8 @@ def e2():
     x = []
     for i in range(0, 16):
         x.append(np.abs(sum(F[i])))
-    plt.scatter(range(0, 16), x)
+    plt.stem(range(0, 16), x)
     plt.show()
 
-e1()
-# e2()
+#e1()
+e2()
