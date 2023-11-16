@@ -29,6 +29,7 @@ def e2(SNR):
     # plt.hist(noise)
     g = np.sqrt(np.linalg.norm(signal) ** 2 / (np.linalg.norm(noise) ** 2 * SNR))
     plt.plot(v, signal + g * noise)
+    plt.show()
 
 def e4():
     def a(t):
@@ -131,3 +132,5 @@ def e3():
 # e6()
 # e7()
 # e8()
+
+e2(10)
