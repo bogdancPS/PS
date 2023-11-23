@@ -131,14 +131,14 @@ def e6():
     print(int(np.floor(len(x)/1000)))
     j = int(np.floor(u/2))
     print(j)
-    F = np.empty((u, 1999))
+    F = np.empty((j, 1999))
 
     for i in range(0, 1999):
         f = x[i*j: i*j + u]
         f = np.fft.fft(f)
         f = np.log(np.abs(f))
 
-        F[j:, i] = f[j:]
+        F[:j, i] = f[:j]
 
     fig = plt.figure(figsize=(5, 4), dpi =100)
     #F = F.T
