@@ -119,24 +119,40 @@ def e4():
 
 
 def e6():
-    rate, x = scipy.io.wavfile.read('vocale.wav')
+    rate, X = scipy.io.wavfile.read('vocale.wav')
     #sd.play(x, rate)
     #sd.wait()
 
-    print(len(x))
-    u = int(np.floor(len(x) / 100))
-    print(int(np.floor(len(x)/100)))
+
+    x = X[:, 0]
+    print(x)
+
+    u = int(np.floor(len(x) / 1000))
+    print(int(np.floor(len(x)/1000)))
+    j = int(np.floor(u/2))
+    print(j)
+    F = np.empty((u, 1999))
+
+    for i in range(0, 1999):
+        f = x[i*j: i*j + u]
+        f = np.fft.fft(f)
+        f = np.log(np.abs(f))
+
+        F[j:, i] = f[j:]
+
+    fig = plt.figure(figsize=(5, 4), dpi =100)
+    #F = F.T
+    plt.imshow(F)
+    plt.show()
 
 
-    F = []
-    for i in range(0, 195):
-        f = []
-        a = np.fft.fft(x[int(np.floor(i/2*u)):int(np.floor((i/2+1)*u))])
-        for j in a:
-            f.append(np.abs(j))
-        F.append(f)
-        print(F)
-
+def e7():
+    print('SNRdb = 10 * log(SNR)')
+    print('80 = 10 * log(SNR)')
+    print("8 = log(SNR)")
+    print('SNR = 10 ^ 8')
+    print('Ps/pz = 10 ^ 8')
+    print('pz = 9/10^7')
 
 
 #e1()
@@ -144,6 +160,3 @@ def e6():
 #e3()
 
 e6()
-
-
-
