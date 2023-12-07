@@ -1,0 +1,130 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import sounddevice as sd
+import math
+import time
+import scipy.io.wavfile
+import csv
+
+
+
+def a():
+    Fs = 1/3600
+    print(Fs)
+
+def b():
+    print(18288 * 3600)
+
+def c():
+    print(1/7200)
+
+
+def de():
+    Fs = 1/3600
+    x = np.genfromtxt('Train.csv', delimiter=',')
+    x = x[2:, 2]
+    X = np.fft.fft(x)
+    N = len(x)
+    X = np.abs(X/N)
+    X = X[:int(N/2)]
+    f = Fs*np.linspace(0, int(N/2), int(N/2))/N
+    plt.plot(f, X)
+    plt.show()
+    plt.plot(f[:100], X[:100])
+    plt.show()
+    #se vede in aceasta portiune faptul ca transformat are o valoare absoluta destul de mare pentru frecventa de infasurare zero ceea ce ne spune ca exista o componenta continua.
+    #ceea ce este de asteptat pentru ca noi masuram existanta unei cantitati ce nu poate fi negativa (numarul de masini ce trec intr-o ora printr-o intersectie este cel putin zero).
+    #sa scadem atunci din vectorul initial media acestuia
+    x = np.genfromtxt('Train.csv', delimiter=',')
+    x = x[2:, 2]
+    mean = sum(x)/len(x)
+    print(mean)
+    print(x)
+    x = x - mean
+    X = np.fft.fft(x)
+    print(x)
+    print(sum(x))
+    N = len(x)
+    X = np.abs(X / N)
+    X = X[:int(N / 2)]
+    f = Fs * np.linspace(0, int(N / 2), int(N / 2)) / N
+    plt.plot(f, X)
+    plt.show()
+    plt.plot(f[:100], X[:100])
+    plt.show()
+
+def f():
+    Fs = 1/3600
+    x = np.genfromtxt('Train.csv', delimiter=',')
+    x = x[2:, 2]
+    X = np.fft.fft(x)
+    N = len(x)
+    X = np.abs(X/N)
+    X = X[:int(N/2)]
+    f = Fs*np.linspace(0, int(N/2), int(N/2))/N
+    plt.plot(f[50:2000], X[50:2000])
+    plt.show()
+    m = []
+    for i in range(1, 41):
+        a = X[i*50:(i + 1)*50]
+        m.append(max(a))
+    maxindex = []
+    for i in range(1, 5):
+        maxindex.append(m.index(max(m)))
+        m.remove(max(m))
+    print(maxindex)
+    freq = []
+    a = []
+    for i in maxindex:
+        a = X[i*50: (i + 1)*50]
+        print(np.argmax(a))
+        freq.append(f[50*i + np.argmax(a)])
+    print(freq)
+    freq.sort()
+    for i in freq:
+        print((1/i)/3600)
+
+
+
+def g():
+    x = np.genfromtxt('Train.csv', delimiter=',')
+    x = x[:, 2]
+    v = np.linspace(10131, 10850, 720)
+    plt.plot(v, x[10131:10851])
+    plt.show()
+
+
+def h():
+    a()
+    #Am vazut deja ca putem vedea pe graficul semnalului zilele saptamanii, si saptamanile individuale. Asa ca, deja putem
+    #spune cu destul de multa sigurata in care zi a saptamanii a inceput esantionarea. Pentru a determina calendaristic ziua
+    #de inceput (aici nu ma refer neaparat si la an), putem incerca sa observam cateva aspecte: spre exemplu aproape sigur
+    #vom gasi cateva zile cu trafic anormal de mic. probabil acele ar fi zile de sarbatoare. incercam sa facem astfel de observatii
+    #pentru a putea spune de pe grafic unde au fost anumite sarbatori sau zile libere, sau poate zile unde ne asteptam ca traficul sa
+    #fie mai mare decat de obicei, si apoi ne putem intoarce usor la ziua de inceput daca reusim sa identificam cateva zone
+    #in grafic unde stim sigur in ce zi ne aflam. Daca reusim sa determinam ziua de inceput, putem incerca sa gasim si anul,
+    #tot prin observatii calendaristice. De exemplu daca in 2000 prima zi de craciun a fost luni, iar in cazul nostru prima
+    #zi de craciun este marti, atunci putem sa ne uitam in alta parte. O alta idee pentru a determina anul in care ne aflam,
+    #este poate sa gasim o functie care determina cresterea numarului de autovehicule. Spre exemplu in semnalul nostru am
+    #vazut cum a existat un trend de crestere in ce priveste numarul de masini din acea intersectie de-a lungul timpului.
+    #Poate daca exista o astfel de functie care poate sa prezica cat de cat cresterea numarului de masini, atunci putem
+    #suprapune graficul acelei functii cu semanulul nostru fara zgomot, si stiind cam in ce an au inceput sa apara masini,
+    #atunci poate putem sa determinam si anul
+
+    #In alta ordine de idei, in opiniea mea conteaza foarte mult daca cunoastem si locatia acelei intersectii, pentru ca
+    #multe dintre lucrurile insirate mai sus se bazeaza pe presupunerea ca stim unde se afla intersectia, si ca stim despre
+    #evenimente ce ar putea fi vizibile in fluxul traficului. De exemplu poate acea intersectie se afla intr-o tara care nu sarbatoreste
+    #craciunul, sau poate sarbatoreste anul nou in timpul verii. In acest caz, speram ca orizontul nostru de timp este suficient de mare,
+    #si incercam sa observam, iar, evenimente regulate, si pe baza lor incercam apoi sa determinam unde ne aflam, si apoi cand au inceput masuratorile.
+
+
+
+def i():
+    
+
+# a()
+# b()
+# c()
+# de()
+# f()
+# g()
